@@ -1,121 +1,119 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import SortingModule from './modules/sorting/SortingModule.jsx'
 import './App.css'
 
+const MODULES = [
+  {
+    id: 'sorting',
+    name: 'Ordenamiento',
+    icon: '⚡',
+    color: '#a78bfa',
+    colorBg: '#1e1b3a',
+    description: 'Construye Bubble Sort o Selection Sort arrastrando bloques. Luego observa una carrera en tiempo real.',
+    status: 'available',
+    component: SortingModule,
+  },
+  {
+    id: 'pathfinding',
+    name: 'Pathfinding',
+    icon: '🗺️',
+    color: '#34d399',
+    colorBg: '#0d2d1a',
+    description: 'Dibuja laberintos y visualiza cómo BFS, DFS y A* encuentran el camino más corto.',
+    status: 'soon',
+    component: null,
+  },
+  {
+    id: 'trees',
+    name: 'Árboles',
+    icon: '🌲',
+    color: '#fbbf24',
+    colorBg: '#2d1f0d',
+    description: 'Inserta, elimina y busca nodos. Visualiza BST, AVL y árboles rojo-negro balancearse solos.',
+    status: 'soon',
+    component: null,
+  },
+]
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [activeModule, setActiveModule] = useState(null)
+  const currentModule = MODULES.find(module => module.id === activeModule)
+
+  if (currentModule?.component) {
+    const ModuleComponent = currentModule.component
+    return <ModuleComponent onBack={() => setActiveModule(null)} />
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <div className="app">
+      <nav className="nav">
+        <div className="logo">
+          Learn<span>Lab</span>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+        <p className="navSub">Visualizador de algoritmos</p>
+      </nav>
+      <main className="main">
+        <header className="hero">
+          <div className="heroTag">🎓 Proyecto educativo</div>
+          <h1 className="heroTitle"> Aprende <em>algoritmos</em><br />jugando </h1>
+          <p className="heroSub"> Construye, ejecuta y compara algoritmos con animaciones en tiempo real. </p>
+        </header>
+        <section className="grid" aria-label="Módulos disponibles">
+          {MODULES.map((mod, index) => (
+            <ModuleCard
+              key={mod.id}
+              module={mod}
+              featured={index === 0}
+              onClick={() => {
+                if (mod.status === 'available') {
+                  setActiveModule(mod.id)
+                }
+              }}
+            />
+          ))}
+        </section>
+        <footer className="stats">
+          <Stat value="3" label="Módulos" />
+          <Stat value="8+" label="Algoritmos" />
+        </footer>
+      </main>
+    </div>
+  )
+}
 
-      <div className="ticks"></div>
+function ModuleCard({ module, featured, onClick }) {
+  const available = module.status === 'available'
+  return (
+    <article
+      className={`card ${featured ? 'featured' : ''} ${!available ? 'cardDisabled' : ''}`}
+      onClick={onClick}
+      role={available ? 'button' : 'article'}
+      tabIndex={available ? 0 : undefined}
+      onKeyDown={e => {
+        if (available && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault()
+          onClick()
+        }
+      }}
+      aria-label={available ? `Abrir módulo ${module.name}` : `${module.name} — próximamente`}
+      style={{ '--card-color': module.color, '--card-bg': module.colorBg }}
+    >
+      <div className="cardGlow" aria-hidden="true" />
+      <span className="cardIcon" aria-hidden="true">{module.icon}</span>
+      <div className="cardLabel" style={{ color: module.color }}>
+        {module.name}
+      </div>
+      <p className="cardDesc">{module.description}</p>
+    </article>
+  )
+}
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+function Stat({ value, label }) {
+  return (
+    <div className="stat">
+      <span className="statValue">{value}</span>
+      <span className="statLabel">{label}</span>
+    </div>
   )
 }
 
