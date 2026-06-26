@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { ALGORITHMS } from './algorithms.js'
+import { ALGORITHMS } from '../model/algorithms.js'
 import './AlgorithmBuilder.css'
 
 const ALL_BLOCKS = {
