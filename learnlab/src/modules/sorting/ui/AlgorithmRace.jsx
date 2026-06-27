@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
-import { ALGORITHMS, generateRandomArray } from './algorithms.js'
-import { StepType } from './algorithms.js'
+import { ALGORITHMS, generateRandomArray } from '../model/algorithms.js'
+import { StepType } from '../model/algorithms.js'
 import './AlgorithmRace.css'
 
 const SPEEDS = {

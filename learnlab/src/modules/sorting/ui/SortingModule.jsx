@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react'
 import AlgorithmBuilder from './AlgorithmBuilder.jsx'
 import AlgorithmRace from './AlgorithmRace.jsx'
-import { generateRandomArray, ALGORITHMS } from './algorithms.js'
+import { generateRandomArray, ALGORITHMS } from '../model/algorithms.js'
 import './SortingModule.css'
 
 const VIEWS = {
