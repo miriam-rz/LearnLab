@@ -227,6 +227,99 @@ const selectionRetos = [
   },
 ]
 
+// INSERTION SORT 
+const insertionRetos = [
+  {
+    id: 'insertion-reto-1',
+    title: 'Reto 1 — Guardar la clave',
+    description: 'Insertion Sort guarda el elemento actual antes de mover los demás.',
+    highlightStage: 'key',
+    variants: [
+      {
+        explanation: 'Guardamos arr[i] en key antes de que otros elementos lo sobreescriban.',
+        lines: [
+          { code: 'for (let i = 1; i < n; i++) {', blank: null },
+          { code: '  const key = ', blank: null },
+          { code: null, blank: { id: 'in1a-1', type: 'write', answer: 'arr[i]', alternatives: ['arr[ i ]'], hint: '¿Qué elemento estás intentando insertar en su lugar correcto?' } },
+          { code: '  let j = i - 1', blank: null },
+          { code: '  // mover elementos mayores que key', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+      {
+        explanation: 'El índice j empieza justo antes del elemento actual.',
+        lines: [
+          { code: 'for (let i = 1; i < n; i++) {', blank: null },
+          { code: '  const key = arr[i]', blank: null },
+          { code: '  let j = ', blank: null },
+          { code: null, blank: { id: 'in1b-1', type: 'select', answer: 'i - 1', alternatives: ['i-1'], options: ['i - 1', 'i', 'i + 1', '0'], hint: '¿Desde dónde empiezas a comparar hacia la izquierda?' } },
+          { code: '  // mover elementos mayores que key', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'insertion-reto-2',
+    title: 'Reto 2 — Desplazar elementos',
+    description: 'Mientras los elementos son mayores que key, los movemos a la derecha.',
+    highlightStage: 'shift',
+    variants: [
+      {
+        explanation: 'El while desplaza elementos hacia la derecha hasta encontrar el lugar correcto.',
+        lines: [
+          { code: 'while (j >= 0 && arr[j] > ', blank: null },
+          { code: null, blank: { id: 'in2a-1', type: 'write', answer: 'key', alternatives: ['key '], hint: '¿Con qué valor comparas cada elemento de la parte ordenada?' } },
+          { code: ') {', blank: null },
+          { code: '  arr[j + 1] = arr[j]', blank: null },
+          { code: '  j--', blank: null },
+          { code: '}', blank: null },
+          { code: 'arr[j + 1] = key', blank: null },
+        ],
+      },
+      {
+        explanation: 'Al salir del while, j + 1 es la posición correcta para key.',
+        lines: [
+          { code: 'while (j >= 0 && arr[j] > key) {', blank: null },
+          { code: '  arr[j + 1] = ', blank: null },
+          { code: null, blank: { id: 'in2b-1', type: 'select', answer: 'arr[j]', alternatives: [], options: ['arr[j]', 'arr[j + 1]', 'key', 'arr[j - 1]'], hint: '¿Qué valor desplazas una posición a la derecha?' } },
+          { code: '  j--', blank: null },
+          { code: '}', blank: null },
+          { code: 'arr[', blank: null },
+          { code: null, blank: { id: 'in2b-2', type: 'write', answer: 'j + 1', alternatives: ['j+1', 'j + 1 '], hint: '¿En qué posición insertas key al salir del while?' } },
+          { code: '] = key', blank: null },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'insertion-reto-3',
+    title: 'Reto 3 — Algoritmo completo',
+    description: 'Completa Insertion Sort de principio a fin.',
+    highlightStage: 'full',
+    variants: [
+      {
+        explanation: 'Insertion Sort empieza desde i = 1 porque el primer elemento ya está "ordenado".',
+        lines: [
+          { code: 'for (let i = ', blank: null },
+          { code: null, blank: { id: 'in3a-1', type: 'select', answer: '1', alternatives: [], options: ['0', '1', '2', 'n - 1'], hint: '¿Por qué no empezamos desde i = 0?' } },
+          { code: '; i < n; i++) {', blank: null },
+          { code: '  const key = arr[i]', blank: null },
+          { code: '  let j = i - 1', blank: null },
+          { code: '  while (j >= 0 && arr[j] > key) {', blank: null },
+          { code: '    arr[j + 1] = arr[j]', blank: null },
+          { code: '    ', blank: null },
+          { code: null, blank: { id: 'in3a-2', type: 'write', answer: 'j--', alternatives: ['j -= 1', 'j = j - 1'], hint: '¿Cómo avanzas j hacia la izquierda?' } },
+          { code: '  }', blank: null },
+          { code: '  arr[j + 1] = ', blank: null },
+          { code: null, blank: { id: 'in3a-3', type: 'write', answer: 'key', alternatives: ['key '], hint: '¿Qué valor insertas en la posición correcta?' } },
+          { code: '}', blank: null },
+        ],
+      },
+    ],
+  },
+]
+
 
 
 export const CODE_TEMPLATES = {
