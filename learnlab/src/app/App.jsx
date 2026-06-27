@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import SortingModule from '../modules/sorting/ui/SortingModule.jsx'
+import SortingModule from '../modules/sorting'
 import './App.css'
 
 const MODULES = [

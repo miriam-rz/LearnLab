@@ -1,7 +1,6 @@
 :root {
-  /* Paleta de colores */
-  --bg-base:      #0d0d14;   /* fondo de toda la app */
-  --bg-surface:   #13131f;   /* fondo de cards/paneles */
+  --bg-base:      #0d0d14;   
+  --bg-surface:   #13131f;   
   --bg-elevated:  #1a1a2e;  
   --border:       #2a2a3f;  
 
@@ -14,7 +13,6 @@
   --red:    #f87171;
   --blue:   #60a5fa;
 
-  /* Texto */
   --text-primary:   #ffffff;
   --text-secondary: #a0a0b0;
   --text-muted:     #555566;
