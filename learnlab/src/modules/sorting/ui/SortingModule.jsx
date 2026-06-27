@@ -4,17 +4,17 @@ import { LEVELS } from '../model/levels.js'
 import LevelSelect from './LevelSelect/LevelSelect.jsx'
 import Visualizer from './Visualizer/Visualizer.jsx'
 import CodeEditor from './CodeEditor/CodeEditor.jsx'
+import FreeEditor from './FreeEditor/FreeEditor.jsx'
 import './SortingModule.css'
 
 export default function SortingModule({ onBack }) {
-  const [selectedAlgo, setSelectedAlgo]       = useState('bubble')
-  const [activeLevel, setActiveLevel]         = useState(null)
-  const [array, setArray]                     = useState(() => generateRandomArray(16))
+  const [selectedAlgo, setSelectedAlgo]         = useState('bubble')
+  const [activeLevel, setActiveLevel]           = useState(null)
+  const [completedByAlgo, setCompletedByAlgo]   = useState({})
+  const [array, setArray]                       = useState(() => generateRandomArray(16))
 
-  const [completedByAlgo, setCompletedByAlgo] = useState({})
-
-  const algo             = ALGORITHMS[selectedAlgo]
-  const completedLevels  = completedByAlgo[selectedAlgo] ?? new Set()
+  const algo            = ALGORITHMS[selectedAlgo]
+  const completedLevels = completedByAlgo[selectedAlgo] ?? new Set()
 
   const handleNewArray = useCallback(() => setArray(generateRandomArray(16)), [])
 
@@ -26,13 +26,10 @@ export default function SortingModule({ onBack }) {
   function handleLevelComplete(levelId) {
     setCompletedByAlgo(prev => {
       const current = prev[selectedAlgo] ?? new Set()
-      const updated = new Set([...current, levelId])
-      return { ...prev, [selectedAlgo]: updated }
+      return { ...prev, [selectedAlgo]: new Set([...current, levelId]) }
     })
     const nextLevel = levelId + 1
-    if (nextLevel <= LEVELS.length) {
-      setActiveLevel(nextLevel)
-    }
+    if (nextLevel <= LEVELS.length) setActiveLevel(nextLevel)
   }
 
   function handleBack() {
@@ -132,55 +129,48 @@ function SortingView({ activeLevel, selectedAlgo, algo, array, completedLevels, 
     )
   }
 
-  if (activeLevel === 1) {
-    return (
-      <Level1View
-        algo={algo}
+  if (activeLevel === 1) return (
+    <LevelView tag="Nivel 1 — Observa" instruction={LEVELS[0].instruction}>
+      <Visualizer
+        algorithm={algo}
         array={array}
-        completedLevels={completedLevels}
-        onComplete={onLevelComplete}
+        onComplete={() => onLevelComplete(1)}
+        completed={completedLevels.has(1)}
       />
-    )
-  }
+    </LevelView>
+  )
 
-  if (activeLevel === 2) {
-    return (
-      <Level2View
+  if (activeLevel === 2) return (
+    <LevelView tag="Nivel 2 — Completa" instruction={LEVELS[1].instruction}>
+      <CodeEditor
         algorithmId={selectedAlgo}
-        algo={algo}
-        completedLevels={completedLevels}
-        onComplete={onLevelComplete}
+        algorithm={algo}
+        onComplete={() => onLevelComplete(2)}
+        completed={completedLevels.has(2)}
       />
-    )
-  }
+    </LevelView>
+  )
+
+  if (activeLevel === 3) return (
+    <LevelView tag="Nivel 3 — Escribe" instruction={LEVELS[2].instruction}>
+      <FreeEditor
+        algorithmId={selectedAlgo}
+        algorithm={algo}
+        array={array}
+        onComplete={() => onLevelComplete(3)}
+        completed={completedLevels.has(3)}
+      />
+    </LevelView>
+  )
 
   return <ComingSoon levelId={activeLevel} onBack={onBackToLevels} />
 }
 
-function Level1View({ algo, array, completedLevels, onComplete }) {
+function LevelView({ tag, instruction, children }) {
   return (
     <div className="level-layout">
-      <LevelInstruction tag="Nivel 1 — Observa" text={LEVELS[0].instruction} />
-      <Visualizer
-        algorithm={algo}
-        array={array}
-        onComplete={() => onComplete(1)}
-        completed={completedLevels.has(1)}
-      />
-    </div>
-  )
-}
-
-function Level2View({ algorithmId, algo, completedLevels, onComplete }) {
-  return (
-    <div className="level-layout">
-      <LevelInstruction tag="Nivel 2 — Completa" text={LEVELS[1].instruction} />
-      <CodeEditor
-        algorithmId={algorithmId}
-        algorithm={algo}
-        onComplete={() => onComplete(2)}
-        completed={completedLevels.has(2)}
-      />
+      <LevelInstruction tag={tag} text={instruction} />
+      {children}
     </div>
   )
 }
