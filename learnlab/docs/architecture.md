@@ -109,9 +109,6 @@ Each layer inside a module has a single responsibility:
 - `ui/` — visual components only, no algorithm logic
 - `lib/` — module-specific utilities (e.g. parsing user code)
 
-### 3. Isolated modules
-Adding a new module (e.g. pathfinding) means creating a new folder under `src/modules/` without touching existing modules.
-
 ---
 
 ## Level System
