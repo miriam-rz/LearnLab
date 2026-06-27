@@ -1,0 +1,138 @@
+.level-select {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.level-select-header {
+  text-align: center;
+}
+
+.level-select-algo {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.level-select-title {
+  font-size: 26px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+
+.level-select-sub {
+  font-size: 14px;
+  color: #a0a0b0;
+}
+
+.level-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .level-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+.level-card {
+  background: #13131f;
+  border: 1px solid #2a2a3f;
+  border-radius: 16px;
+  padding: 24px 20px;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.2s, transform 0.2s;
+  font-family: inherit;
+  width: 100%;
+}
+
+.level-card-unlocked:hover {
+  border-color: var(--level-color);
+  transform: translateY(-3px);
+}
+
+.level-card-locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.level-card-completed {
+  border-color: color-mix(in srgb, var(--level-color) 50%, transparent);
+  background: color-mix(in srgb, var(--level-color) 5%, #13131f);
+}
+
+.level-card:focus-visible {
+  outline: 2px solid var(--level-color);
+  outline-offset: 3px;
+}
+
+.level-card-status {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 14px;
+}
+
+.level-status-done {
+  color: #4ade80;
+  font-weight: 700;
+}
+
+.level-status-open {
+  color: var(--level-color);
+}
+
+.level-card-emoji {
+  font-size: 32px;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.level-card-num {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--level-color);
+  margin-bottom: 4px;
+}
+
+.level-card-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 8px;
+  letter-spacing: -0.3px;
+}
+
+.level-card-desc {
+  font-size: 13px;
+  color: #a0a0b0;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+.level-card-cta {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--level-color);
+}
+
+.level-card-cta-done {
+  color: #4ade80;
+}
+
+.level-card-cta-locked {
+  color: #555566;
+  font-size: 12px;
+}
