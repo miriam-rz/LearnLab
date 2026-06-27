@@ -1,4 +1,4 @@
-export const Levels = [
+export const LEVELS = [
     {
         id: 1, 
         key: 'observe',
@@ -32,7 +32,7 @@ export const Levels = [
 ]
 
 export function getLevelById(id) {
-  return Levels.find(l => l.id === id)
+  return LEVELS.find(l => l.id === id)
 }
 
 export function isLevelUnlocked(level, completedLevels) {

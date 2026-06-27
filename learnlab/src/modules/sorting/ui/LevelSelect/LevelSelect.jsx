@@ -1,5 +1,5 @@
 import { isLevelUnlocked } from "../../model/levels";
-import LevelSelect from "./LevelSelect.css";
+import  "./LevelSelect.css";
 
 export default function LevelSelect({ levels, completedLevels, onSelect, algorithmId, algorithms }) {
     const algo = algorithms[algorithmId]
