@@ -8,6 +8,9 @@ export const StepType = {
 // 
 //BUBBLE SORT
 // 
+// Complexity: O(n²)
+// Compares adjacent pairs and interchangeable pairs if they are in the wrong order.
+// The largest element "bubbles" to the end on each pass.
 
 export function bubbleSortSteps(inputArray) {
  
@@ -60,6 +63,9 @@ export function bubbleSortSteps(inputArray) {
 //
 // SELECTION SORT
 //
+// Complexity: O(n²)
+// On each pass, it finds the minimum of the unsorted part
+// and places it in its correct position.
 
 export function selectionSortSteps(inputArray) {
   const arr = [...inputArray]
@@ -82,7 +88,7 @@ export function selectionSortSteps(inputArray) {
       })
 
       if (arr[j] < arr[minIdx]) {
-        minIdx = j  // encontramos un nuevo mínimo
+        minIdx = j  
       }
     }
     if (minIdx !== i) {
@@ -111,8 +117,10 @@ export function selectionSortSteps(inputArray) {
 }
 
 //
-// ── INSERTION SORT ───────────────────────────────────────────────
+// INSERTION SORT 
 //
+// Complexity: O(n) best case, O(n²) worst case
+// Takes each element and inserts it into the correct position within the already sorted part.
 
 export function insertionSortSteps(inputArray) {
   const arr = [...inputArray]
@@ -164,6 +172,112 @@ export function insertionSortSteps(inputArray) {
   return steps
 }
 
+//
+// MERGE SORT 
+//
+// Complexity: O(n log n) always — the most efficient modulo
+// How it works (divide and conquer):
+// 1. Divide the array into two halves
+// 2. Sort each half recursively
+// 3. Merge the two sorted halves
+
+export function mergeSortSteps(inputArray) {
+  const arr = [...inputArray]
+  const steps = []
+  const n = arr.length
+  const sortedIndices = new Set()
+ 
+  function mergeSort(left, right) {
+    if (right - left <= 1) return
+ 
+    const mid = Math.floor((left + right) / 2)
+ 
+    steps.push({
+      array: [...arr],
+      highlights: buildRangeHighlight(left, right, StepType.COMPARE),
+      sortedIndices: new Set(sortedIndices),
+      description: `Dividiendo posiciones ${left} a ${right - 1}`,
+    })
+ 
+    mergeSort(left, mid)
+    mergeSort(mid, right)
+    merge(left, mid, right)
+  }
+ 
+  function merge(left, mid, right) {
+    const leftArr  = arr.slice(left, mid)
+    const rightArr = arr.slice(mid, right)
+ 
+    let i = 0  
+    let j = 0 
+    let k = left  
+ 
+    while (i < leftArr.length && j < rightArr.length) {
+      steps.push({
+        array: [...arr],
+        highlights: { [left + i]: StepType.COMPARE, [mid + j]: StepType.COMPARE },
+        sortedIndices: new Set(sortedIndices),
+        description: `Comparando ${leftArr[i]} y ${rightArr[j]}`,
+      })
+ 
+      if (leftArr[i] <= rightArr[j]) {
+        arr[k] = leftArr[i]
+        i++
+      } else {
+        arr[k] = rightArr[j]
+        j++
+      }
+ 
+      steps.push({
+        array: [...arr],
+        highlights: { [k]: StepType.SWAP },
+        sortedIndices: new Set(sortedIndices),
+        description: `Colocando ${arr[k]} en posición ${k}`,
+      })
+ 
+      k++
+    }
+
+    while (i < leftArr.length) {
+      arr[k] = leftArr[i]
+      steps.push({
+        array: [...arr],
+        highlights: { [k]: StepType.SORTED },
+        sortedIndices: new Set(sortedIndices),
+        description: `Copiando ${arr[k]} al arreglo`,
+      })
+      i++
+      k++
+    }
+
+    while (j < rightArr.length) {
+      arr[k] = rightArr[j]
+      steps.push({
+        array: [...arr],
+        highlights: { [k]: StepType.SORTED },
+        sortedIndices: new Set(sortedIndices),
+        description: `Copiando ${arr[k]} al arreglo`,
+      })
+      j++
+      k++
+    }
+ 
+    for (let x = left; x < right; x++) sortedIndices.add(x)
+  }
+ 
+  mergeSort(0, n)
+ 
+  steps.push({
+    array: [...arr],
+    highlights: {},
+    sortedIndices: new Set(Array.from({ length: n }, (_, i) => i)),
+    description: '¡Ordenado!',
+  })
+ 
+  return steps
+}
+
+
 export const ALGORITHMS = {
   bubble: {
     id: 'bubble',
@@ -192,6 +306,16 @@ export const ALGORITHMS = {
     generateSteps: insertionSortSteps,
     correctBlocks: ['outer-loop', 'store-key', 'shift-right', 'insert'],
   },
+    merge: {
+    id: 'merge',
+    name: 'Merge Sort',
+    color: '#60a5fa',
+    description: 'Divide el arreglo en mitades, ordena cada una y las combina. Siempre O(n log n).',
+    complexity: 'O(n log n)',
+    generateSteps: mergeSortSteps,
+    correctBlocks: ['divide', 'recurse-left', 'recurse-right', 'merge'],
+  },
+
 }
 
 export function generateRandomArray(n = 12, min = 5, max = 95) {
@@ -208,4 +332,10 @@ export function generateNearlySortedArray(n = 12) {
     ;[arr[i], arr[j]] = [arr[j], arr[i]]
   }
   return arr
+}
+
+function buildRangeHighlight(left, right, type) {
+  const highlights = {}
+  for (let i = left; i < right; i++) highlights[i] = type
+  return highlights
 }
