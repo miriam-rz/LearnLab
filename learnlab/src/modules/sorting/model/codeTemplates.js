@@ -129,6 +129,104 @@ const bubbleRetos = [
     ],
   },
 ]
+// SELECTION SORT 
+const selectionRetos = [
+  {
+    id: 'selection-reto-1',
+    title: 'Reto 1 — Encontrar el mínimo',
+    description: 'Completa la lógica para encontrar el índice del elemento mínimo.',
+    highlightStage: 'find-min',
+    variants: [
+      {
+        explanation: 'Selection Sort guarda el índice del mínimo, no el valor.',
+        lines: [
+          { code: 'let minIdx = ', blank: null },
+          { code: null, blank: { id: 's1a-1', type: 'write', answer: 'i', alternatives: ['i '], hint: 'Al inicio de cada pasada, el mínimo asumido es el primer elemento no ordenado.' } },
+          { code: 'for (let j = i + 1; j < n; j++) {', blank: null },
+          { code: '  if (arr[j] < ', blank: null },
+          { code: null, blank: { id: 's1a-2', type: 'select', answer: 'arr[minIdx]', alternatives: [], options: ['arr[minIdx]', 'arr[i]', 'arr[j - 1]', 'minIdx'], hint: '¿Con qué valor comparas para saber si encontraste un nuevo mínimo?' } },
+          { code: ') {', blank: null },
+          { code: '    minIdx = j', blank: null },
+          { code: '  }', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+      {
+        explanation: 'La actualización del mínimo solo ocurre si encontramos algo menor.',
+        lines: [
+          { code: 'let minIdx = i', blank: null },
+          { code: 'for (let j = i + 1; j < n; j++) {', blank: null },
+          { code: '  if (arr[j] < arr[minIdx]) {', blank: null },
+          { code: '    minIdx = ', blank: null },
+          { code: null, blank: { id: 's1b-1', type: 'select', answer: 'j', alternatives: [], options: ['j', 'i', 'minIdx', 'j - 1'], hint: '¿Cuál es el índice del nuevo mínimo que encontraste?' } },
+          { code: '  }', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'selection-reto-2',
+    title: 'Reto 2 — El intercambio condicional',
+    description: 'Selection Sort solo intercambia si el mínimo no es el elemento actual.',
+    highlightStage: 'swap',
+    variants: [
+      {
+        explanation: 'Si el mínimo ya está en su lugar, no hay que intercambiar.',
+        lines: [
+          { code: 'if (minIdx !== ', blank: null },
+          { code: null, blank: { id: 's2a-1', type: 'write', answer: 'i', alternatives: ['i '], hint: '¿Con qué posición comparas para saber si ya está en su lugar?' } },
+          { code: ') {', blank: null },
+          { code: '  const temp = arr[i]', blank: null },
+          { code: '  arr[i] = ', blank: null },
+          { code: null, blank: { id: 's2a-2', type: 'select', answer: 'arr[minIdx]', alternatives: [], options: ['arr[minIdx]', 'arr[i]', 'arr[j]', 'temp'], hint: '¿Qué valor pones en la posición i?' } },
+          { code: '  arr[minIdx] = temp', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+      {
+        explanation: 'Completa el intercambio completo.',
+        lines: [
+          { code: 'if (minIdx !== i) {', blank: null },
+          { code: '  const temp = ', blank: null },
+          { code: null, blank: { id: 's2b-1', type: 'write', answer: 'arr[i]', alternatives: ['arr[ i ]'], hint: '¿Qué valor guardas temporalmente?' } },
+          { code: '  arr[i] = arr[minIdx]', blank: null },
+          { code: '  arr[minIdx] = ', blank: null },
+          { code: null, blank: { id: 's2b-2', type: 'write', answer: 'temp', alternatives: ['temp '], hint: '¿Qué variable tiene el valor original?' } },
+          { code: '}', blank: null },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'selection-reto-3',
+    title: 'Reto 3 — Algoritmo completo',
+    description: 'Completa Selection Sort de principio a fin.',
+    highlightStage: 'full',
+    variants: [
+      {
+        explanation: 'Selection Sort tiene un bucle exterior que avanza la frontera entre ordenado y no ordenado.',
+        lines: [
+          { code: 'for (let i = 0; i < ', blank: null },
+          { code: null, blank: { id: 's3a-1', type: 'select', answer: 'n - 1', alternatives: ['n-1'], options: ['n', 'n - 1', 'n - 2', 'n + 1'], hint: 'El último elemento queda ordenado automáticamente.' } },
+          { code: '; i++) {', blank: null },
+          { code: '  let minIdx = i', blank: null },
+          { code: '  for (let j = i + 1; j < n; j++) {', blank: null },
+          { code: '    if (arr[j] < arr[minIdx]) minIdx = j', blank: null },
+          { code: '  }', blank: null },
+          { code: '  if (minIdx !== i) {', blank: null },
+          { code: '    const temp = arr[i]', blank: null },
+          { code: '    arr[i] = ', blank: null },
+          { code: null, blank: { id: 's3a-2', type: 'write', answer: 'arr[minIdx]', alternatives: ['arr[minIdx ]', 'arr[ minIdx]'], hint: '¿Qué valor va en la posición i?' } },
+          { code: '    arr[minIdx] = temp', blank: null },
+          { code: '  }', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+    ],
+  },
+]
+
 
 
 export const CODE_TEMPLATES = {
