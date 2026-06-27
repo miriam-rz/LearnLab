@@ -141,3 +141,53 @@ const PATTERNS = {
     },
   ],
 }
+
+export function parseCode(text, algorithmId) {
+  if (typeof text !== 'string')           return buildResult(Stage.EMPTY, 0, '')
+  if (text.trim().length === 0)           return buildResult(Stage.EMPTY, 0, '')
+  if (text.length > 2000)                 return buildResult(Stage.UNKNOWN, 0, 'El código es demasiado largo.')
+  if (!PATTERNS[algorithmId])             return buildResult(Stage.UNKNOWN, 0, '')
+
+  const patterns = PATTERNS[algorithmId]
+
+  for (const { stage, pattern, progress, message } of patterns) {
+    if (pattern.test(text)) {
+      return buildResult(stage, progress, message)
+    }
+  }
+
+  return buildResult(Stage.UNKNOWN, 0, 'Sigue escribiendo, aún no reconozco el patrón.')
+}
+
+export function getHighlightsForStage(stage, array) {
+  const n = array.length
+  if (n === 0) return {}
+
+  switch (stage) {
+    case Stage.OUTER_LOOP: {
+      return array.reduce((acc, _, i) => ({ ...acc, [i]: 'outer' }), {})
+    }
+    case Stage.INNER_LOOP: {
+      const mid = Math.floor(n / 2)
+      return { [mid]: 'compare', [mid + 1]: 'compare' }
+    }
+    case Stage.COMPARE: {
+      const mid = Math.floor(n / 3)
+      return { [mid]: 'compare', [mid + 1]: 'compare' }
+    }
+    case Stage.SWAP: {
+      const a = Math.floor(n / 4)
+      const b = Math.floor(n * 3 / 4)
+      return { [a]: 'swap', [b]: 'swap' }
+    }
+    case Stage.COMPLETE: {
+      return array.reduce((acc, _, i) => ({ ...acc, [i]: 'sorted' }), {})
+    }
+    default:
+      return {}
+  }
+}
+
+function buildResult(stage, progress, message) {
+  return { stage, progress, message }
+}
