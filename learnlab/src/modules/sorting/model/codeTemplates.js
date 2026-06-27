@@ -320,7 +320,101 @@ const insertionRetos = [
   },
 ]
 
-
+//  MERGE SORT 
+const mergeRetos = [
+  {
+    id: 'merge-reto-1',
+    title: 'Reto 1 — Dividir el arreglo',
+    description: 'Merge Sort divide el arreglo en dos mitades recursivamente.',
+    highlightStage: 'divide',
+    variants: [
+      {
+        explanation: 'El punto medio divide el arreglo en dos partes iguales.',
+        lines: [
+          { code: 'function mergeSort(arr) {', blank: null },
+          { code: '  if (arr.length <= 1) return arr', blank: null },
+          { code: '  const mid = ', blank: null },
+          { code: null, blank: { id: 'm1a-1', type: 'write', answer: 'Math.floor(arr.length / 2)', alternatives: ['Math.floor(arr.length/2)', 'Math.floor( arr.length / 2 )'], hint: '¿Cómo calculas el índice del punto medio?' } },
+          { code: '  const left  = arr.slice(0, mid)', blank: null },
+          { code: '  const right = arr.slice(mid)', blank: null },
+          { code: '  return merge(mergeSort(left), mergeSort(right))', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+      {
+        explanation: 'slice divide el arreglo sin modificar el original.',
+        lines: [
+          { code: 'const mid   = Math.floor(arr.length / 2)', blank: null },
+          { code: 'const left  = arr.slice(', blank: null },
+          { code: null, blank: { id: 'm1b-1', type: 'select', answer: '0, mid', alternatives: ['0,mid'], options: ['0, mid', 'mid', '0, arr.length', '1, mid'], hint: '¿Qué rango de índices corresponde a la mitad izquierda?' } },
+          { code: ')', blank: null },
+          { code: 'const right = arr.slice(mid)', blank: null },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'merge-reto-2',
+    title: 'Reto 2 — Combinar dos mitades',
+    description: 'La función merge combina dos arreglos ordenados en uno.',
+    highlightStage: 'merge',
+    variants: [
+      {
+        explanation: 'Comparamos el primer elemento de cada mitad y tomamos el menor.',
+        lines: [
+          { code: 'while (left.length && right.length) {', blank: null },
+          { code: '  if (left[0] <= ', blank: null },
+          { code: null, blank: { id: 'm2a-1', type: 'write', answer: 'right[0]', alternatives: ['right[ 0 ]'], hint: '¿Con qué elemento de la derecha comparas?' } },
+          { code: ') {', blank: null },
+          { code: '    result.push(left.shift())', blank: null },
+          { code: '  } else {', blank: null },
+          { code: '    result.push(right.shift())', blank: null },
+          { code: '  }', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+      {
+        explanation: 'Al terminar el while, uno de los dos arreglos aún tiene elementos.',
+        lines: [
+          { code: 'while (left.length && right.length) {', blank: null },
+          { code: '  if (left[0] <= right[0]) {', blank: null },
+          { code: '    result.push(', blank: null },
+          { code: null, blank: { id: 'm2b-1', type: 'select', answer: 'left.shift()', alternatives: [], options: ['left.shift()', 'left[0]', 'left.pop()', 'right.shift()'], hint: '¿Cómo tomas y eliminas el primer elemento de left?' } },
+          { code: '  } else {', blank: null },
+          { code: '    result.push(right.shift())', blank: null },
+          { code: '  }', blank: null },
+          { code: '}', blank: null },
+          { code: 'return result.concat(', blank: null },
+          { code: null, blank: { id: 'm2b-2', type: 'select', answer: 'left, right', alternatives: [], options: ['left, right', 'left', 'right', 'right, left'], hint: '¿Qué elementos sobran al terminar el while?' } },
+          { code: ')', blank: null },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'merge-reto-3',
+    title: 'Reto 3 — Algoritmo completo',
+    description: 'Completa Merge Sort completo con la función merge.',
+    highlightStage: 'full',
+    variants: [
+      {
+        explanation: 'Merge Sort es recursivo: se llama a sí mismo con las dos mitades.',
+        lines: [
+          { code: 'function mergeSort(arr) {', blank: null },
+          { code: '  if (arr.length <= 1) return ', blank: null },
+          { code: null, blank: { id: 'm3a-1', type: 'write', answer: 'arr', alternatives: ['arr '], hint: '¿Qué retornas cuando el arreglo ya no se puede dividir?' } },
+          { code: '  const mid   = Math.floor(arr.length / 2)', blank: null },
+          { code: '  const left  = mergeSort(arr.slice(0, mid))', blank: null },
+          { code: '  const right = mergeSort(', blank: null },
+          { code: null, blank: { id: 'm3a-2', type: 'write', answer: 'arr.slice(mid)', alternatives: ['arr.slice( mid )'], hint: '¿Qué parte del arreglo corresponde a la mitad derecha?' } },
+          { code: ')', blank: null },
+          { code: '  return merge(left, right)', blank: null },
+          { code: '}', blank: null },
+        ],
+      },
+    ],
+  },
+]
 
 export const CODE_TEMPLATES = {
   bubble:    bubbleRetos,
