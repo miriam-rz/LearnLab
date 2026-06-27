@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react'
 import { buildSession, validateInput } from '../../model/codeTemplates.js'
-//import { sanitizePaste } from '../../../../shared/lib/inputValidator.js'
+import { sanitizePaste } from '../../../../shared/lib/inputValidator.js'
 import './CodeEditor.css'
 
 export default function CodeEditor({ algorithmId, algorithm, onComplete, completed }) {
