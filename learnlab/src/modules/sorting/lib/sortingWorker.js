@@ -66,3 +66,34 @@ let result
   }
 
   if (timedOut) return
+
+  if (!Array.isArray(result)) {
+    self.postMessage({
+      success: false,
+      error: 'Tu función debe retornar el arreglo modificado.',
+      sorted: false,
+    })
+    return
+  }
+
+  if (!hasSameElements(array, result)) {
+    self.postMessage({
+      success: false,
+      error: 'El arreglo resultante no contiene los mismos elementos. ¿Lo modificaste incorrectamente?',
+      sorted: false,
+    })
+    return
+  }
+
+  const sorted = isSorted(result)
+
+  if (!sorted) {
+    self.postMessage({
+      success: true,
+      sorted: false,
+      error: null,
+      message: 'El arreglo no quedó ordenado correctamente. Revisa tu lógica.',
+    })
+    return
+  }
+  
